@@ -1,0 +1,20 @@
+<div class="jumbotron">
+    <h2>Firma Yeni Kayıt</h2>
+    <p><p>
+  <div class="form-group">
+    <input type="text" class="form-control" id="name" placeholder="Firma Adı" #username>
+  </div>
+  <div class="form-group">
+    <input type="email" class="form-control" id="username" aria-describedby="emailHelp" placeholder="E-Mail" #username>
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control" id="userpass" placeholder="Şifre" #userpass>
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control" id="userpass" placeholder="Şifre" #userpass>
+  </div>
+  <div>
+    <button type="button" class="btn btn-success" (click)="Register(username,userpass)" >Yeni Kayıt</button>
+    <button type="button" class="btn btn-danger" (click)="Cancel(username,userpass)">Temizle</button>
+  </div>
+</div>
