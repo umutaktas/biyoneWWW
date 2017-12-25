@@ -2,6 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {Route} from '@angular/router';
+import {Upload} from '../../app/models/upload';
+import {UploadService} from '../../services/upload.service';
 
 @Component({
   selector: 'app-register',
@@ -10,21 +12,41 @@ import {Route} from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(public auth: AuthService) { }
+  selectedFiles: FileList | null;
+  currentUpload: Upload;
+  constructor(public auth: AuthService,private upSvc: UploadService) { }
 
   ngOnInit() {
   }
 
-  Register(username: HTMLInputElement, userpass: HTMLInputElement) {
-    this.auth.emailSignUp(username.value, userpass.value);
-    this.Cancel(username, userpass);
+  Register(email: HTMLInputElement, password: HTMLInputElement, name: HTMLInputElement, desc: HTMLInputElement, photoUrl: HTMLInputElement) {
+    this.auth.emailSignUp(email.value, password.value)
+    this.Cancel(email, password, name, desc, photoUrl)
+
 
   }
 
-  Cancel(username: HTMLInputElement, userpass: HTMLInputElement) {
-    username.value = ''
-    userpass.value = ''
-    username.focus();
+  Cancel(email: HTMLInputElement, password: HTMLInputElement, name: HTMLInputElement, desc: HTMLInputElement, photoUrl: HTMLInputElement) {
+    email.value = ''
+    password.value = ''
+    name.value = ''
+    desc.value = ''
+    photoUrl.value = ''
+    email.focus();
   }
 
+  uploadFile() {
+    const file = this.selectedFiles;
+    if (file && file.length === 1) {
+      this.currentUpload = new Upload(file.item(0));
+      this.upSvc.pushUpload(this.currentUpload);
+    } else {
+      console.error('No file found!');
+    }
+
+  }
+
+  detectFiles($event) {
+    this.selectedFiles = ($event.target as HTMLInputElement).files;
+  }
 }

@@ -2,19 +2,37 @@
     <h2>Firma Yeni Kayıt</h2>
     <p><p>
   <div class="form-group">
-    <input type="text" class="form-control" id="name" placeholder="Firma Adı" #username>
+    <input type="text" class="form-control" id="name" placeholder="Firma Adı" #name>
   </div>
   <div class="form-group">
-    <input type="email" class="form-control" id="username" aria-describedby="emailHelp" placeholder="E-Mail" #username>
+    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-Mail" #email>
   </div>
   <div class="form-group">
-    <input type="password" class="form-control" id="userpass" placeholder="Şifre" #userpass>
+    <input type="password" class="form-control" id="password" placeholder="Şifre" #password>
   </div>
   <div class="form-group">
-    <input type="password" class="form-control" id="userpass" placeholder="Şifre" #userpass>
+    <input type="text" class="form-control" id="desc" placeholder="Açıklama" #desc>
+  </div>
+
+  <div class="box">
+    <h5>Firma Görseli</h5>
+
+    <label>
+      <input type="file" class="button" (change)="detectFiles($event)">
+    </label>
+    <button class="button is-primary"
+            [disabled]="!selectedFiles"
+            (click)="uploadFile()">
+      Upload Single
+    </button>
+  </div>
+
+
+  <div class="form-group">
+    <input type="text" class="form-control" id="photoUrl" placeholder="Resim" #photoUrl>
   </div>
   <div>
-    <button type="button" class="btn btn-success" (click)="Register(username,userpass)" >Yeni Kayıt</button>
-    <button type="button" class="btn btn-danger" (click)="Cancel(username,userpass)">Temizle</button>
+    <button type="button" class="btn btn-success" (click)="Register(email,password,name,desc,photoUrl)" >Yeni Kayıt</button>
+    <button type="button" class="btn btn-danger" (click)="Cancel(email,password,name,desc,photoUrl)">Temizle</button>
   </div>
 </div>

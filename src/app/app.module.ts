@@ -12,6 +12,9 @@ import { LoginComponent } from '../components/login/login.component';
 import {AuthService} from '../services/auth.service';
 import {AuthGuardService} from '../services/auth-guard.service';
 import { NotFoundComponent } from './not-found/not-found.component';
+import {UploadService} from '../services/upload.service';
+import {AngularFireDatabaseModule} from 'angularfire2/database';
+
 
 
 
@@ -48,9 +51,10 @@ export const routeConfig: Routes =  [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    AngularFireDatabaseModule,
     RouterModule.forRoot(routeConfig),
   ],
-  providers: [AuthService, AuthGuardService],
+  providers: [AuthService, AuthGuardService, UploadService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

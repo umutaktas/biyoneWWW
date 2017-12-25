@@ -16,10 +16,10 @@ interface Firm {
 
 @Injectable()
 export class AuthService {
-  firm: Observable<Firm>;
+  user: Observable<Firm>;
 
   constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
-    this.firm = this.afAuth.authState
+    this.user = this.afAuth.authState
       .switchMap((firm) => {
         if (firm) {
           return this.afs.doc<Firm>(`firms/${firm.uid}`).valueChanges();

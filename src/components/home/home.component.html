@@ -1,3 +1,9 @@
+  <div *ngIf="auth.user;else noYetki | async;">
+     Merhaba {{auth.user }}
+  </div>
+  <ng-template #noYetki>
+   Merhaba Misafir
+  </ng-template>
 <p>
   home works!
 </p>
