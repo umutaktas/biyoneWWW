@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {Route} from '@angular/router';
-import {Upload} from '../../app/models/upload';
+import {Upload} from '../../models/upload';
 import {UploadService} from '../../services/upload.service';
 
 @Component({

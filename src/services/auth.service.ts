@@ -4,6 +4,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {AngularFirestore, AngularFirestoreDocument} from 'angularfire2/firestore';
 import {Router} from '@angular/router';
 import * as firebase from 'firebase';
+import {NotifyService} from './notify.service';
 
 
 interface Firm {
@@ -18,7 +19,10 @@ interface Firm {
 export class AuthService {
   user: Observable<Firm>;
 
-  constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
+  constructor(private afAuth: AngularFireAuth,
+              private afs: AngularFirestore,
+              private router: Router,
+              public notify: NotifyService) {
     this.user = this.afAuth.authState
       .switchMap((firm) => {
         if (firm) {
@@ -56,10 +60,9 @@ export class AuthService {
   private oAuthLogin(provider: firebase.auth.AuthProvider) {
     return this.afAuth.auth.signInWithPopup(provider)
       .then((credential) => {
-       // this.notify.update('Welcome to Firestarter!!!', 'success');
+        this.notify.update('Welcome to Firestarter!!!', 'success');
         return this.updateUserData(credential.user);
       })
-      .catch((error) => this.handleError(error) );
   }
 
   //// Anonymous Auth ////
@@ -67,14 +70,10 @@ export class AuthService {
   anonymousLogin() {
     return this.afAuth.auth.signInAnonymously()
       .then((user) => {
-     //   this.notify.update('Welcome to Firestarter!!!', 'success');
+        this.notify.update('Welcome to Firestarter!!!', 'success');
         return this.updateUserData(user); // if using firestore
       })
-      .catch((error) => {
-        console.error(error.code);
-        console.error(error.message);
-        this.handleError(error);
-      });
+
   }
 
   //// Email/Password Auth ////
@@ -82,20 +81,20 @@ export class AuthService {
   emailSignUp(email: string, password: string) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((user) => {
-   //     this.notify.update('Welcome to Firestarter!!!', 'success');
+        this.notify.update('Welcome to Firestarter!!!', 'success');
         console.log(email,password);
         return this.updateUserData(user); // if using firestore
       })
-      .catch((error) => this.handleError(error) );
+
   }
 
   emailLogin(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then((user) => {
-    //    this.notify.update('Welcome to Firestarter!!!', 'success')
-        return this.updateUserData(user); // if using firestore
+        this.notify.update('Welcome to Firestarter!!!', 'success')
+       // return this.updateUserData(user); // if using firestore
       })
-      .catch((error) => this.handleError(error) );
+      //.catch((error) => this.handleError(error) );
   }
 
   // Sends email allowing user to reset password
@@ -103,8 +102,8 @@ export class AuthService {
     const fbAuth = firebase.auth();
 
     return fbAuth.sendPasswordResetEmail(email)
-  //    .then(() => this.notify.update('Password update email sent', 'info'))
-      .catch((error) => this.handleError(error));
+      .then(() => this.notify.update('Password update email sent', 'info'))
+      //.catch((error) => this.handleError(error));
   }
 
   signOut() {
@@ -113,11 +112,6 @@ export class AuthService {
     });
   }
 
-  // If error, console log and notify user
-  private handleError(error: Error) {
-    console.error(error);
- //   this.notify.update(error.message, 'error');
-  }
 
   // Sets user data to firestore after succesful login
   private updateUserData(firm: Firm) {
@@ -132,5 +126,7 @@ export class AuthService {
     };
     return userRef.set(data);
   }
+
+
 
 }

@@ -1,9 +1,21 @@
-  <div *ngIf="auth.user;else noYetki | async;">
-     Merhaba {{auth.user }}
+<div class="box" >
+  <div *ngIf="auth.user | async; then authenticated else guest">
+    <!-- template will replace this div -->
   </div>
-  <ng-template #noYetki>
-   Merhaba Misafir
-  </ng-template>
-<p>
-  home works!
-</p>
+</div>
+
+<!-- User NOT logged in -->
+<ng-template #guest class="box">
+  <h3>Merhaba Misafir</h3>
+  <p class="card-text">Login to get started...</p>
+  <button class="button" routerLink="/login">Login</button>
+</ng-template>
+
+<!-- User logged in -->
+<ng-template #authenticated>
+  <div *ngIf="auth.user | async as user">
+    <h3>Selam, {{ user.name }}</h3>
+    <p class="text-truncate">UID: {{ user.uid }}</p>
+    <button class="button" (click)="logout()">Logout</button>
+  </div>
+</ng-template>

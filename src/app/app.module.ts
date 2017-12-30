@@ -11,9 +11,11 @@ import { RouterModule, Routes} from '@angular/router';
 import { LoginComponent } from '../components/login/login.component';
 import {AuthService} from '../services/auth.service';
 import {AuthGuardService} from '../services/auth-guard.service';
-import { NotFoundComponent } from './not-found/not-found.component';
+import { NotFoundComponent } from '../not-found/not-found.component';
 import {UploadService} from '../services/upload.service';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
+import { NotificationMessageComponent } from '../components/notification-message/notification-message.component';
+import {NotifyService} from '../services/notify.service';
 
 
 
@@ -44,7 +46,8 @@ export const routeConfig: Routes =  [
     HomeComponent,
     RegisterComponent,
     LoginComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    NotificationMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,7 @@ export const routeConfig: Routes =  [
     AngularFireDatabaseModule,
     RouterModule.forRoot(routeConfig),
   ],
-  providers: [AuthService, AuthGuardService, UploadService],
+  providers: [AuthService, AuthGuardService, UploadService, NotifyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

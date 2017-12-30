@@ -4,14 +4,22 @@
   <div class="form-group">
     <h1>Biyone Firma Giriş</h1>
     <p><p>
-    <input type="email" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Kullanıcı Adı Girin" #username>
+    <input type="email" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Kullanıcı Adı Girin" #email>
   </div>
   <div class="form-group">
-    <input type="password" class="form-control" id="userpass" placeholder="Şifre" #userpass>
+    <input type="password" class="form-control" id="userpass" placeholder="Şifre" #password>
   </div>
   <div>
-  <button type="button" class="btn btn-success" (click)="SignIn(username,userpass)" >Giriş</button>
+  <button type="button" class="btn btn-success" (click)="SignIn(email,password)" data-dismiss="alert" >Giriş</button>
   <button type="button" class="btn btn-danger my-2 my-sm-0">İptal</button>
+
+    <span class="error" *ngIf="this.error">
+      <p>
+      <div class="alert alert-danger alert-dismissable"><strong> {{ this.error}} </strong>
+       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+       </div>
+    </span>
+
   </div>
 </div>
   </fieldset>
